@@ -1,0 +1,1 @@
+let g:spf13_bundle_groups=['general', 'tagbar', 'neocomplete', 'programming', 'ruby', 'python', 'go', 'javascript', 'html', 'misc', 'writing' ]

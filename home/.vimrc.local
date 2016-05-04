@@ -1,0 +1,20 @@
+set t_Co=256
+colorscheme molokai
+colors zenburn
+set background=dark
+
+
+inoremap <expr> <Esc> "<Esc>"
+
+" GO Stuff
+let g:go_fmt_command = "goimports"
+
+let g:syntastic_javascript_checkers = ['eslint']
+
+set nospell
+
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4

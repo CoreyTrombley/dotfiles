@@ -1,0 +1,16 @@
+#ssh -p 22 -c 3des -f -N lwang@bastion.ec2.unifiedsocial.com -L 6600:localhost:7474 ssh stage-0001-instance-neo4j-01.ec2.unifiedsocial.com -L 7474:localhost:7474
+
+# Prod PMN
+#tunnel -u ctrombley -r production-0001-pmn-4a7adece.unifiedsocial.com -p 80 -l 8089
+# Prod Redshift
+#tunnel -u ctrombley -r production-0001-redshift-01.csl1vvtytte4.us-east-1.redshift.amazonaws.com -p 5439 -l 5439
+# Prod Neo4j DW production-0001-instance-neo4j-01.ec2.unifiedsocial.com
+
+# Prod ECM
+tunnel -u ctrombley -r production-0001-instance-neo4j-01.ec2.unifiedsocial.com -p 7474 -l 47474
+#tunnel -u ctrombley -r stage-0001-instance-neo4j-01.ec2.unifiedsocial.com -p 7474 -l 47474
+
+
+# Scheduler
+tunnel -u ctrombley -r stage-0001-scheduler-4c6f76c8.unifiedsocial.com -p 8080 -l 8099
+

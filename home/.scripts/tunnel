@@ -1,0 +1,64 @@
+#!/bin/bash
+
+function usage
+{
+    echo "usage: tunnel -u user -r remote-host -p remote-port -l local-port [-s] [-x]"
+	exit 1
+}
+
+function show
+{
+	echo "Remote tunnel:::::::::::::::::::::::::::::::::::::"
+	ssh $user@bastion.ec2.unifiedsocial.com "ps aux | grep $user | grep ':localhost:' | grep -v grep"
+	echo "Local tunnel::::::::::::::::::::::::::::::::::::::"
+	ps aux | grep ':localhost:' | grep -v grep
+}
+function kill_all
+{
+	show
+	echo "killing all:::::::::::::::::::::::::::::::::::::::"
+    ssh $user@bastion.ec2.unifiedsocial.com "pgrep -u $user -f :localhost: | xargs kill -9"
+    ps -ef | pgrep -f "[b]astion.ec2.unifiedsocial.com -L" | xargs kill -9
+}
+
+user=""
+remote=""
+host_port=""
+local_port=""
+while [ "$1" != "" ]; do
+    case $1 in
+        -u | --user )           shift
+                                user=$1
+                                ;;
+        -r | --remote )    		shift
+								remote=$1
+                                ;;
+        -p | --rport )          shift
+                                host_port=$1
+                                ;;
+		-l | --lport ) 			shift
+								local_port=$1
+								;;
+		-s | --show	)			show
+								exit 0
+								;;
+		-x | --kill	)			kill_all
+								exit 0
+								;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+[ -z "$user" ] && usage 
+[ -z "$remote" ] && usage
+[ -z "$host_port" ] && usage
+[ -z "$local_port" ] && usage
+
+echo "Tunneling to $remote:$host_port using localhost:$local_port"
+ssh -p 22 -c 3des -f $user@bastion.ec2.unifiedsocial.com -L $local_port:localhost:$local_port ssh $user@$remote -L $local_port:localhost:$host_port -N
+
+ps aux | grep "ssh $remote -L $local_port:localhost:$host_port" | grep -v grep
+ssh $user@bastion.ec2.unifiedsocial.com "ps aux | grep 'ssh $remote -L $local_port:localhost:$host_port' | grep -v grep"
+

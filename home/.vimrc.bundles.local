@@ -1,0 +1,7 @@
+Plugin 'mxw/vim-jsx'
+Plugin 'jaxbot/syntastic-react'
+Plugin 'justinj/vim-react-snippets'
+Plugin 'derekwyatt/vim-scala'
+UnBundle 'nathanaelkane/vim-indent-guides'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Python-Syntax-Folding'
